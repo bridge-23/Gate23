@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "NFTonBase_backend": {
+      "candid": "src/NFTonBase_backend/NFTonBase_backend.did",
+      "package": "NFTonBase_backend",
+      "type": "rust"
+    },
+    "NFTonBase_frontend": {
+      "dependencies": [
+        "NFTonBase_backend"
+      ],
+      "source": [
+        "src/NFTonBase_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "NFTonBase_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
