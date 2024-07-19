@@ -195,7 +195,7 @@ pub async fn send_base_eth(to_add: String, amount: u64) -> (String, String) {
 }
 
 #[ic_cdk::update]
-pub async fn mint_nft(to_address: String, uri: String) -> String {
+pub async fn mint_nft(to_address: String, uri: String, amount: i32) -> String {
     let destination_address = Address::from_str(&to_address[2..]).unwrap();
 
     let derivation_path: Vec<Vec<u8>> = ic_cdk::api::caller()
@@ -243,7 +243,7 @@ pub async fn mint_nft(to_address: String, uri: String) -> String {
             let txhash_res = contract
                 .signed_call(
                     "mint",
-                    (destination_address, U256::from(1u64), uri),
+                    (destination_address, U256::from(amount), uri),
                     options,
                     hex::encode(from_address.unwrap()),
                     key_info,

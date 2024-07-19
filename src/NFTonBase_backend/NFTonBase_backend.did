@@ -47,7 +47,7 @@ service : {
     "get_evm_address": (text) -> (text);
     "get_base_eth_balance": (text) -> (nat64, text);
     "send_base_eth":(text, nat64) -> (text, text);
-    "mint_nft": (text, text) -> (text);
+    "mint_nft": (text, text, int32) -> (text);
     "http_request": (HttpRequest) -> (HttpResponse) query;
     "transform" : (TransformArgs) -> (HttpResponse) query;
 }

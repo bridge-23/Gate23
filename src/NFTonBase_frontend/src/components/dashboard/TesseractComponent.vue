@@ -193,7 +193,8 @@ const onMintNFT = async () => {
   visible.value = true
   const result = (await NFTonBase_backend.mint_nft(
     ethAddress.value,
-    uploadedDataURL.value
+    uploadedDataURL.value,
+    1
   )) as string
   mintResult.value = result
   visible.value = false
