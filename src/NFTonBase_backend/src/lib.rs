@@ -217,8 +217,8 @@ pub async fn mint_nft(to_address: String, uri: String, amount: i32) -> String {
             return format!("error during create web3 interface: {}", e.to_string());
         }
     };
-    let contract_address = Address::from_str(&CONTRACT_ADDRESS[2..]).unwrap();
 
+    let contract_address = Address::from_str(&CONTRACT_ADDRESS[2..]).unwrap();
     let contract_res = Contract::from_json(w3.eth(), contract_address, NFT_ABI);
 
     match contract_res {
@@ -234,32 +234,47 @@ pub async fn mint_nft(to_address: String, uri: String, amount: i32) -> String {
                 }
             };
 
-            let options = Options::with(|op| {
-                op.gas = Some(U256::from(300000));
-                op.nonce = Some(tx_count);
-                op.gas_price = Some(U256::from(GAS_PRICE));
-            });
+            let mut nonce_loop = true;
+            let mut nonce_plus = 0;
+            let mut result = "".to_string();
 
-            let txhash_res = contract
-                .signed_call(
-                    "mint",
-                    (destination_address, U256::from(amount), uri),
-                    options,
-                    hex::encode(from_address.unwrap()),
-                    key_info,
-                    CHAIN_ID,
-                )
-                .await;
-            match txhash_res {
-                Ok(tx_hash) => hex::encode(tx_hash),
-                Err(error) => {
-                    if error.to_string().contains("already known") {
-                        "Success".to_string()
-                    } else {
-                        return format!("error during tx: {}", error.to_string());
+            while nonce_loop {
+                let options = Options::with(|op| {
+                    op.gas = Some(U256::from(300000));
+                    op.nonce = Some(tx_count + U256::from(nonce_plus));
+                    op.gas_price = Some(U256::from(GAS_PRICE));
+                });
+
+                let txhash_res = contract
+                    .signed_call(
+                        "mint",
+                        (destination_address, U256::from(amount), uri.clone()),
+                        options,
+                        hex::encode(from_address.clone().unwrap()),
+                        key_info.clone(),
+                        CHAIN_ID,
+                    )
+                    .await;
+
+                match txhash_res {
+                    Ok(tx_hash) => {
+                        nonce_loop = false;
+                        result = hex::encode(tx_hash)
                     }
-                }
+                    Err(error) => {
+                        if error.to_string().contains("already known") {
+                            result = "Success".to_string();
+                            nonce_loop = false;
+                        } else if error.to_string().contains("nonce") {
+                            nonce_plus += 1;
+                        } else {
+                            result = format!("error during tx: {}", error.to_string());
+                            nonce_loop = false;
+                        }
+                    }
+                };
             }
+            result
         }
         Err(error) => format!("error during getting contract: {}", error.to_string()),
     }
