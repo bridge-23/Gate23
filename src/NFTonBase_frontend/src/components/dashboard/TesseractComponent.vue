@@ -1,5 +1,5 @@
 <template>
-  <div class="px-20 py-10" v-if="isLogin">
+  <div class="container" v-if="isLogin">
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-4 flex flex-col">
         <q-file
@@ -8,6 +8,7 @@
           v-model="model"
           @update:model-value="updatedFile"
           @clear="removeFile"
+          class="border-gray-500 border-[2px] rounded-md"
         >
           <template v-slot:prepend>
             <q-icon name="attach_file" />
@@ -20,17 +21,15 @@
           :src="imageLink"
           fit="contain"
           spinner-color="white"
-          class="w-full aspect-square my-3 border-[#1976D2] border-[2px] rounded-md"
+          class="my-3 border-gray-500 border-[2px] rounded-md w-full object-contain"
         />
       </div>
       <div class="col-span-4">
-        <q-input
+        <textarea
           v-model="detectedJsonData"
-          outlined
           readonly
-          autogrow
           placeholder="Detected Receipt Data will appear here."
-          class="bg-transparent"
+          class="w-full h-32 p-2 bg-transparent border border-gray-500 rounded-md text-white"
         />
       </div>
       <div class="col-span-4">
@@ -40,49 +39,28 @@
           leave-active-class="animated fadeOut"
         >
           <div>
-            <q-btn
-              label="Upload Image"
-              color="primary"
-              no-caps
-              class="!w-full mb-3"
-              @click="onUploadImage"
-            />
-            <q-input
+            <button @click="onUploadImage" class="activity-button">Upload Image</button>
+            <input
               v-model="uploadedImageURL"
               placeholder="Uploaded Image URL"
-              outlined
               readonly
-              autogrow
+              class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-white mt-3"
             />
-            <q-btn
-              label="Analyze Image"
-              color="primary"
-              no-caps
-              class="!w-full mt-3"
-              @click="onAnalyzeImage"
-            />
-            <q-btn
-              label="Upload Receipt Data"
-              color="primary"
-              no-caps
-              class="!w-full my-3"
-              @click="onUploadData"
-            />
-            <q-input
+            <button @click="onAnalyzeImage" class="activity-button mt-3">Analyze Image</button>
+            <button @click="onUploadData" class="activity-button mt-3">Upload Receipt Data</button>
+            <input
               v-model="uploadedDataURL"
               placeholder="Uploaded Receipt URL"
-              outlined
               readonly
-              autogrow
+              class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-white mt-3"
             />
-            <q-btn
-              @click="onMintNFT"
-              label="Mint NFT on Base Chain"
-              color="primary"
-              no-caps
-              class="!w-full my-3"
+            <button @click="onMintNFT" class="activity-button mt-3">Mint NFT on Base Chain</button>
+            <input
+              v-model="mintResult"
+              placeholder="Mint result"
+              readonly
+              class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-white mt-3"
             />
-            <q-input v-model="mintResult" placeholder="Mint result" outlined readonly autogrow />
           </div>
         </transition>
         <q-inner-loading
@@ -99,6 +77,7 @@
     <p class="text-[#1976D2] text-2xl font-semibold">Login first...</p>
   </q-page>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { convertToDataURL } from '@/utils/image.js'
@@ -200,3 +179,63 @@ const onMintNFT = async () => {
   visible.value = false
 }
 </script>
+
+<style scoped>
+/* General styles for the container */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 50px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.col-span-4 {
+  flex: 1 1 calc(33.333% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.q-btn {
+  margin-top: 10px;
+}
+
+button,
+.q-btn {
+  background-color: #1c92d2;
+  background-image: linear-gradient(to top, #6224e7 0%, #3b60e8 100%);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the next button */
+.activity-button {
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.activity-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+</style>

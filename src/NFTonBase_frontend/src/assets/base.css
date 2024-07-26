@@ -1,0 +1,99 @@
+/* main.css */
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  width: 100%;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+  margin-top: 50px;
+  color: #fff; /* Set the text color to white for the entire component */
+}
+
+/* Apply general styles to headers and buttons */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+}
+
+button,
+.q-btn {
+  background-color: #1c92d2;
+  background-image: linear-gradient(to top, #6224e7 0%, #3b60e8 100%);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover,
+.q-btn:hover {
+  background-image: linear-gradient(to top, #3b60e8 0%, #6224e7 100%);
+}
+
+button:active,
+.q-btn:active {
+  transform: scale(0.98);
+}
+
+.activity-button.selected {
+  background-color: #3b60e8;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(59, 96, 232, 0.7);
+}
+
+.btn-next {
+  background-color: #22ffae;
+  background-image: linear-gradient(to top, #096a38 0%, #13e9c9 100%);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.btn-next:hover {
+  background-image: linear-gradient(to top, #13e9c9 0%, #096a38 100%);
+}
+
+.btn-next:active {
+  transform: scale(0.98);
+}
