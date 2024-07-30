@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <q-page v-if="isLogin">
     <div class="px-10 py-10">
@@ -5,13 +6,11 @@
         <p class="text-center text-primary text-xl text-bold">Loading...</p>
       </div>
       <div class="grid grid-cols-12 gap-3" v-else>
-        <div
-          v-if="nftList.length > 0"
-          class="xl:col-span-3 lg:col-span-4 col-span-6"
-          v-for="nft in nftList"
-        >
-          <NftCard v-bind="{ receipt: nft }" />
-        </div>
+        <template v-if="nftList.length > 0">
+          <div class="xl:col-span-3 lg:col-span-4 col-span-6" v-for="nft in nftList">
+            <NftCard v-bind="{ receipt: nft }" />
+          </div>
+        </template>
         <div v-else class="col-span-12">
           <p class="text-white text-center text-primary text-xl text-bold">No NFTs...</p>
         </div>
@@ -81,6 +80,7 @@ onBeforeMount(async () => {
   const contract = new ethers.Contract(CONTRACT_ADDRESS, TokenABI, provider)
   try {
     const nftIDs: number[] = await contract.getHoldTokenIds(ethAddress.value)
+    console.log('NFT IDs:', nftIDs)
     nftIDs.map(async (nftID) => {
       const uri: string = await contract.uri(nftID)
       const nftData = await fetch(uri)

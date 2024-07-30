@@ -3,11 +3,11 @@
     <div class="header">Create Shop</div>
     <div class="form-group">
       <label class="label">Title (Name)</label>
-      <input v-model="shopTitle" type="text" class="input" />
+      <input v-model="shopTitle" placeholder="Name" type="text" class="input" />
     </div>
     <div class="form-group">
       <label class="label">Address</label>
-      <input v-model="shopAddress" type="text" class="input" />
+      <input v-model="shopAddress" placeholder="Address" type="text" class="input" />
     </div>
     <div class="form-group">
       <label class="label">Media</label>
@@ -71,9 +71,8 @@ const addFromLink = () => {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  border-width: 1px;
+  background: rgba(255, 255, 255);
 }
 
 .button-group {

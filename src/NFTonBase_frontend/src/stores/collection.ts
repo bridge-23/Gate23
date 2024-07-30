@@ -7,9 +7,13 @@ export const useCollectionStore = defineStore('collection', {
     collection: {
       collection_name: '',
       collection_image_url: ''
-    } as Collection
+    } as Collection,
+    collections: [] as Collection[]
   }),
   actions: {
+    setAllCollectionData(collections: Collection[]) {
+      this.collections = collections
+    },
     setName(value: string) {
       this.collection.collection_name = value
     },
@@ -19,16 +23,27 @@ export const useCollectionStore = defineStore('collection', {
     setImageUrl(value: string) {
       this.collection.collection_image_url = value
     },
-    async saveCollectionToDB() {
+
+    async saveCollectionToDB(collectionKey: string = '') {
       const junoCollectionAPI = new JunoCollectionAPI()
 
       try {
         const CollectionCopy = JSON.parse(JSON.stringify(this.collection))
 
-        const collection = await junoCollectionAPI.createOrUpdateCollection(CollectionCopy)
+        const collection = await junoCollectionAPI.createOrUpdateCollection(CollectionCopy, collectionKey)
         console.log('collection:', collection)
       } catch (error) {
         console.error('Failed to save collection:', error)
+      }
+    },
+
+    async fetchCollections() {
+      const junoCollectionAPI = new JunoCollectionAPI()
+      try {
+        const collections = await junoCollectionAPI.fetchAll()
+        this.setAllCollectionData(collections)
+      } catch (error) {
+        console.error('Failed to fetch collections:', error)
       }
     }
   }

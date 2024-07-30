@@ -1,4 +1,4 @@
-import { getDoc, setDoc } from '@junobuild/core'
+import { getDoc, listDocs, setDoc } from '@junobuild/core'
 import type { Collection } from '../types/entities'
 import { getSatteliteOptions } from '../api'
 import { nanoid } from 'nanoid'
@@ -19,6 +19,19 @@ export class JunoCollectionAPI {
     }
 
     return { ...collections.data }
+  }
+
+  async fetchAll(): Promise<Collection[]> {
+    const response = await listDocs<Collection>({
+      collection: COLLECTIONS_COLLECTION,
+      satellite: getSatteliteOptions(),
+    });
+
+    if (!response.items) {
+      return [];
+    }
+
+    return response.items.map((doc) => ({ ...doc.data, id: doc.key }));
   }
 
   async createOrUpdateCollection(

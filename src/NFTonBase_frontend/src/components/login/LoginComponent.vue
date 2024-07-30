@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <h1>Login</h1>
+      <h2 class="text-white">Login</h2>
+      <h3 class="text-white my-4">Gate23</h3>
       <q-btn class="login-button" @click="onLogin" :loading="isLoading">
         <i class="fas fa-fingerprint"></i> Log In with Internet Identity
       </q-btn>
@@ -11,17 +12,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
-import { NFTonBase_backend } from 'declarations/NFTonBase_backend'
-import { NFIDProvider, signIn, authSubscribe, type User } from '@junobuild/core'
+import { NFIDProvider, signIn } from '@junobuild/core'
 import logoUrl from '@/assets/icon-512x512.png'
-import { useProfileStore } from '@/stores/profile'
+import router from '@/router';
 
 const isLoading = ref(false)
-const authStore = useAuthStore()
-const router = useRouter()
-const profileStore = useProfileStore()
 
 const onLogin = async () => {
   isLoading.value = true
@@ -35,24 +30,7 @@ const onLogin = async () => {
       })
     })
 
-    authSubscribe((user: User | null) => {
-      if (user) {
-        profileStore.setId(user.key)
-        authStore.setIsLogin(true)
-        authStore.setPrincipal(user.key)
-
-        NFTonBase_backend.get_evm_address(user.key)
-          .then((result) => {
-            authStore.setAddress(result)
-            profileStore.setAddress(result)
-          })
-          .catch((error) => {
-            console.error('Error fetching EVM address:', error)
-          })
-
-        router.push('/')
-      }
-    })
+    router.push('/')
   } catch (error) {
     console.error('Failed to sign in:', error)
   } finally {
@@ -67,6 +45,7 @@ const onLogin = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: linear-gradient(to top, #2e2e2e 0%, #070707 100%);
 }
 
 .login-form {
@@ -76,7 +55,7 @@ const onLogin = async () => {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .login-form h1 {
@@ -87,7 +66,7 @@ const onLogin = async () => {
 
 .login-button {
   background-color: #1c92d2;
-  background-image: linear-gradient(to top, #f2fcfe 0%, #1c92d2 100%);
+  background: linear-gradient(to top, #2e2e2e 0%, #070707 100%);
   border: none;
   color: white;
   font-size: 1rem;
@@ -105,7 +84,7 @@ const onLogin = async () => {
 }
 
 .login-button:hover {
-  background-image: linear-gradient(to top, #1c92d2 0%, #f2fcfe 100%);
+  background-image: linear-gradient(to top, #070707 0%, #2e2e2e 100%);
 }
 
 .login-button:active {

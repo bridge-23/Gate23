@@ -1,32 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { useProfileStore } from '@/stores/profile'
+// import { useProfileStore } from '@/stores/profile'
 import { JunoProfileAPI } from '@/api/junoProfileAPI'
+// import { useCollectionStore } from '@/stores/collection'
+// import { JunoCollectionAPI } from '../api/junoCollectionAPI'
 
 const routes = [
   {
     path: '/auth',
-    component: () => import('@/layouts/AuthLayout.vue'), // Layout for authentication pages
+    component: () => import('@/layouts/AuthLayout.vue'),
     children: [
       {
         path: 'login',
         component: () => import('@/components/login/LoginComponent.vue')
       }
-      // You can add more auth-related routes here (e.g., registration, password reset)
     ]
   },
   {
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
-      // {
-      //   path: '',
-      //   component: () => import('@/views/HomeView.vue'),
-      //   meta: { requiresAuth: true }
-      // },
       {
         path: '',
-        component: () => import('@/views/TesseractView.vue'),
+        component: () => import('@/views/ProductView.vue'),
         meta: { requiresAuth: true }
       },
       {
@@ -49,7 +45,6 @@ const routes = [
         component: () => import('@/components/onboarding/Step3CreateCollection.vue'),
         meta: { requiresAuth: true }
       }
-      // Add more routes as needed
     ]
   }
 ]
@@ -59,17 +54,15 @@ const router = createRouter({
   routes
 })
 
-// Add navigation guard
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
 
   if (requiresAuth && !authStore.isLogin) {
-    next('/auth/login') // Redirect to login page if not authenticated
+    next('/auth/login')
   } else if (to.path === '/' && !authStore.isLogin) {
-    next('/auth/login') // Redirect to login page if accessing home page and not authenticated
+    next('/auth/login')
   } else if (requiresAuth && authStore.isLogin) {
-    // Check if the user needs to complete onboarding
     const record = await fetchUserRecord()
     if (
       !record.onboarding_completed &&
@@ -88,11 +81,16 @@ router.beforeEach(async (to, from, next) => {
 
 const fetchUserRecord = async () => {
   const junoProfileAPI = new JunoProfileAPI()
+  // const junoCollectionAPI = new JunoCollectionAPI()
   const authStore = useAuthStore()
+  // const collectionStore = useCollectionStore()
 
   try {
     const userProfile = await junoProfileAPI.fetchProfile(authStore.principal)
     console.log('userProfile', userProfile)
+    // const collections = await junoCollectionAPI.fetchAll()
+    // collectionStore.setAllCollectionData(collections)
+    // console.log('collectionStore', collectionStore.collections)
 
     return {
       onboarding_completed: userProfile?.onboarding_completed

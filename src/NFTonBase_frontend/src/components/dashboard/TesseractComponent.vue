@@ -46,7 +46,6 @@
               readonly
               class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-white mt-3"
             />
-            <button @click="onAnalyzeImage" class="activity-button mt-3">Analyze Image</button>
             <button @click="onUploadData" class="activity-button mt-3">Upload Receipt Data</button>
             <input
               v-model="uploadedDataURL"
@@ -88,6 +87,11 @@ import { NFTonBase_backend } from 'declarations/NFTonBase_backend/index'
 import { nanoid } from 'nanoid'
 import { HttpAgent, Actor } from '@dfinity/agent'
 import { idlFactory } from '@/utils/recognition-backend.did'
+import { idlFactory as NFTonBase_idlFactory } from '@/utils/backend.did'
+
+// const canisterId = import.meta.env.VITE_RECOGNITION_BACKEND as string;
+//       const agent = new HttpAgent({ host: 'https://ic0.app' });
+//       const actor = Actor.createActor(idlFactory, { agent, canisterId });
 
 const authStore = useAuthStore()
 const { isLogin, ethAddress } = storeToRefs(authStore)
@@ -100,6 +104,11 @@ const uploadedImageURL = ref('')
 const uploadedDataURL = ref('')
 const mintResult = ref('')
 const imageByteArray = ref()
+
+const docKey = nanoid()
+const canisterId = 'tkuag-tqaaa-aaaak-akvgq-cai' as string
+const agent = new HttpAgent({ host: 'https://ic0.app' })
+const actor = Actor.createActor(NFTonBase_idlFactory, { agent, canisterId })
 
 const updatedFile = async (uploadFile: any) => {
   if (uploadFile) {
@@ -131,39 +140,40 @@ const removeFile = () => {
 
 const onUploadImage = async () => {
   visible.value = true
-  const docKey = nanoid()
-  const result = (await NFTonBase_backend.upload_image(docKey, imageByteArray.value)) as string
+  const result = (await actor.upload_image(docKey, imageByteArray.value)) as string
+  // const result = (await NFTonBase_backend.upload_image(docKey, imageByteArray.value)) as string
   uploadedImageURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/image/${result}`
+  console.log('uploadedImageURL', uploadedImageURL.value)
   visible.value = false
 }
 
-const onAnalyzeImage = async () => {
-  visible.value = true
-  const canisterId = '6kmvc-taaaa-aaaak-akunq-cai' as string
-  const agent = new HttpAgent({ host: 'https://ic0.app' })
-  const actor = Actor.createActor(idlFactory, { agent, canisterId })
-  const detectedData = (await actor.send_image_url_to_proxy(uploadedImageURL.value)) as string
-  console.log('detectedData', detectedData)
-  let resultText = JSON.parse(detectedData).choices[0].message.content
-  let index = resultText.indexOf('{')
-  resultText = resultText.slice(index)
-  index = resultText.lastIndexOf('}')
-  resultText = resultText.substring(0, index + 1)
-  detectedJsonData.value = resultText
-  console.log('receiptData', JSON.parse(resultText))
-  visible.value = false
-}
+// const onAnalyzeImage = async () => {
+//   visible.value = true
+//   const canisterId = '6kmvc-taaaa-aaaak-akunq-cai' as string
+//   const agent = new HttpAgent({ host: 'https://ic0.app' })
+//   const actor = Actor.createActor(idlFactory, { agent, canisterId })
+//   const detectedData = (await actor.send_image_url_to_proxy(uploadedImageURL.value)) as string
+//   console.log('detectedData', detectedData)
+//   let resultText = JSON.parse(detectedData).choices[0].message.content
+//   let index = resultText.indexOf('{')
+//   resultText = resultText.slice(index)
+//   index = resultText.lastIndexOf('}')
+//   resultText = resultText.substring(0, index + 1)
+//   detectedJsonData.value = resultText
+//   console.log('receiptData', JSON.parse(resultText))
+//   visible.value = false
+// }
 
 const onUploadData = async () => {
   visible.value = true
   let receiptJson = JSON.parse(detectedJsonData.value)
   receiptJson = { ...receiptJson, image_url: uploadedImageURL.value }
   console.log(receiptJson)
-  const docKey = nanoid()
-  const result = (await NFTonBase_backend.upload_data(
-    docKey,
-    JSON.stringify(receiptJson)
-  )) as string
+  // const result = (await NFTonBase_backend.upload_data(
+  //   docKey,
+  //   JSON.stringify(receiptJson)
+  // )) as string
+  const result = (await actor.upload_data(docKey, JSON.stringify(receiptJson))) as string
   uploadedDataURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/receipt/${result}`
   visible.value = false
 }
