@@ -82,7 +82,6 @@ import { idlFactory as NFTonBase_idlFactory } from '@/utils/backend.did'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 
-const docKey = nanoid()
 const canisterId = 'tkuag-tqaaa-aaaak-akvgq-cai' as string
 const agent = new HttpAgent({ host: 'https://ic0.app' })
 const actor = Actor.createActor(NFTonBase_idlFactory, { agent, canisterId })
@@ -104,10 +103,8 @@ const imageLink = ref('')
 const price = ref()
 const imageByteArray = ref()
 const visible = ref(false)
-const nftData = ref('')
 const mintResult = ref('')
-
-const router = useRouter()
+const uploadedDataURL = ref('')
 const prifileStore = useProfileStore()
 const collectionStore = useCollectionStore()
 const productStore = useProductStore()
@@ -143,15 +140,20 @@ const updatedFile = async (uploadFile: any) => {
   }
 }
 
-const uploadImage = async () => {
+const uploadImage = async (docKey: string) => {
   const result = (await actor.upload_image(docKey, imageByteArray.value)) as string
   imageLink.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/image/${result}`
   console.log('uploadedImageURL', imageLink.value)
 }
 
+const uploadData = async (docKey: string, data: object) => {
+  const result = (await actor.upload_data(docKey, JSON.stringify(data))) as string
+  uploadedDataURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/receipt/${result}`
+}
+
 const mintNFT = async () => {
   visible.value = true
-  const result = (await actor.mint_nft(ethAddress.value, nftData.value, 1)) as string
+  const result = (await actor.mint_nft(ethAddress.value, uploadedDataURL.value, 1)) as string
   mintResult.value = result
   visible.value = false
 }
@@ -163,10 +165,11 @@ const removeFile = () => {
 
 const saveProduct = async () => {
   visible.value = true
-
+  
+  const docKey = nanoid()
   const rawCollection = toRaw(selectedCollection.value)
 
-  await uploadImage() // upload image to canister!!!
+  await uploadImage(docKey) // upload image to canister!!!
 
   productStore.setId(docKey)
   productStore.setCollectioId(rawCollection?.id)
@@ -176,8 +179,10 @@ const saveProduct = async () => {
   productStore.setCurrency('USD')
   productStore.setDescription(description.value)
 
-  const productJson = JSON.parse(JSON.stringify(productStore.product))
-  nftData.value = productJson as string
+  await uploadData(docKey, productStore.product);
+
+  // const productJson = JSON.parse(JSON.stringify(productStore.product))
+  // nftData.value = productJson as string
 
   await mintNFT() // mint NFT to canister!!!
 
