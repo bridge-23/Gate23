@@ -3,7 +3,7 @@
     <h1>Create First Collection</h1>
     <div class="form-group">
       <label class="label">Title (Name)</label>
-      <input v-model="collectionTitle" type="text" class="input" />
+      <input v-model="collectionTitle" placeholder="Collection Name" type="text" class="input" />
     </div>
     <div class="form-group">
       <label class="label">Media</label>
@@ -103,19 +103,16 @@ h1 {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  margin-bottom: 10px;
+  border-width: 1px;
+  background: rgb(245, 245, 245);
 }
 
 .select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  border-width: 1px;
+  background: rgb(245, 245, 245);
   margin-bottom: 10px;
 }
 

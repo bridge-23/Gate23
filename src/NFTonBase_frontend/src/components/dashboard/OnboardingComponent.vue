@@ -50,14 +50,12 @@ import { authSubscribe } from "@junobuild/core";
 import type { User } from "@junobuild/core";
 import type { Profile } from '../../types/entities'
 
-// Профиль пользователя
 const profile = ref<Profile | null>(null)
 const hasRecord = ref(false)
 const authStore = useAuthStore()
 const router = useRouter()
 const junoProfileAPI = new JunoProfileAPI()
 
-// Функция для получения профиля пользователя
 const fetchUserProfile = async (user: User) => {
   try {
     const userProfile = await junoProfileAPI.fetchProfile(user.key)

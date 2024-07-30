@@ -90,7 +90,6 @@ h1 {
   padding: 10px;
   border: none;
   background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
   cursor: pointer;
   transition:
     background 0.3s ease,
