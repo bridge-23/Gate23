@@ -44,6 +44,11 @@ const routes = [
         path: 'create-collection',
         component: () => import('@/components/onboarding/Step3CreateCollection.vue'),
         meta: { requiresAuth: true }
+      },
+      {
+        path: '/collections/:collectionId',
+        component: () => import('@/components/dashboard/ProductPage.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   }

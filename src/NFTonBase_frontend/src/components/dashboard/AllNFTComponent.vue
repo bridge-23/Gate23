@@ -28,6 +28,7 @@ import { storeToRefs } from 'pinia'
 import NftCard from '@/components/dashboard/NFTCard.vue'
 import { ethers } from 'ethers'
 import TokenABI from '@/utils/NFTABI.json'
+import type { Product } from '@/types/entities'
 
 interface Modifier {
   modifier_name: string
@@ -70,7 +71,7 @@ const { isLogin, ethAddress } = storeToRefs(authStore)
 const RPC_ENDPOINT = 'https://base.drpc.org'
 const CONTRACT_ADDRESS = '0x1CFEA7ecB518B3e4C5f72f11bc0F8E75A070A5C0'
 
-const nftList = ref<Receipt[]>([])
+const nftList = ref<Product[]>([])
 const isLoading = ref(false)
 
 onBeforeMount(async () => {
@@ -84,7 +85,7 @@ onBeforeMount(async () => {
     nftIDs.map(async (nftID) => {
       const uri: string = await contract.uri(nftID)
       const nftData = await fetch(uri)
-      const json: Receipt = await nftData.json()
+      const json: Product = await nftData.json()
       nftList.value.push(json)
     })
     isLoading.value = false

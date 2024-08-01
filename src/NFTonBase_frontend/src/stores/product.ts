@@ -8,11 +8,13 @@ export const useProductStore = defineStore('product', {
       id: '',
       product_collection_id: '',
       nft_data: '',
+      img_url: '',
       product_name: '',
       product_price: 0,
       product_currency: '',
       description: ''
-    } as Product
+    } as Product,
+    products: [] as Product[]
   }),
   actions: {
     setId(id: string) {
@@ -20,6 +22,9 @@ export const useProductStore = defineStore('product', {
     },
     setCollectioId(id: string) {
       this.product.product_collection_id = id
+    },
+    setImgUrl(value: string) {
+      this.product.img_url = value
     },
     setNftData(value: string) {
       this.product.nft_data = value
@@ -35,6 +40,9 @@ export const useProductStore = defineStore('product', {
     },
     setDescription(value: string) {
       this.product.description = value
+    },
+    setAllProductData(products: Product[]) {
+      this.products = products
     },
     async saveProductToDB() {
       const junoProductAPI = new JunoProductAPI()
@@ -55,12 +63,23 @@ export const useProductStore = defineStore('product', {
 
       this.product = {
         id: '',
+        product_collection_id: '',
+        img_url: '',
         nft_data: '',
         product_name: '',
         product_price: 0,
         product_currency: '',
         description: ''
       } as Product
+    },
+    async fetchProducts() {
+      const junoCollectionAPI = new JunoProductAPI()
+      try {
+        const products = await junoCollectionAPI.fetchAll()
+        this.setAllProductData(products)
+      } catch (error) {
+        console.error('Failed to fetch collections:', error)
+      }
     }
   }
 })

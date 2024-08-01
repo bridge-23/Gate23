@@ -148,6 +148,7 @@ const uploadImage = async (docKey: string) => {
 
 const uploadData = async (docKey: string, data: object) => {
   const result = (await actor.upload_data(docKey, JSON.stringify(data))) as string
+  console.log('uploadedDataURL', result)
   uploadedDataURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/receipt/${result}`
 }
 
@@ -173,7 +174,8 @@ const saveProduct = async () => {
 
   productStore.setId(docKey)
   productStore.setCollectioId(rawCollection?.id)
-  productStore.setNftData(imageLink.value)
+  productStore.setImgUrl(imageLink.value)
+  productStore.setNftData(mintResult.value)
   productStore.setName(title.value)
   productStore.setPrice(price.value)
   productStore.setCurrency('USD')

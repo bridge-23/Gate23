@@ -11,6 +11,7 @@ export interface Profile {
 export interface Product {
   id: string
   nft_data: string
+  img_url: string
   product_collection_id: string
   product_name: string
   product_price: number
