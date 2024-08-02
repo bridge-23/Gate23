@@ -65,6 +65,7 @@ const addFromLink = () => {
   display: block;
   margin-bottom: 5px;
   font-size: 1rem;
+  font-weight:bold;
 }
 
 .input {

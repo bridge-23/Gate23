@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Where do you plan to use it?</h1>
+    <h1 style="font-weight: bold;">Where do you plan to use it?</h1>
     <div class="button-grid">
       <button
         class="activity-button"
@@ -89,8 +89,9 @@ h1 {
 .activity-button {
   margin: 5px;
   padding: 10px;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  border: 2px solid transparent;
+  background-color: rgb(245, 246, 246);
   cursor: pointer;
   transition:
     background 0.3s ease,
@@ -99,6 +100,7 @@ h1 {
 }
 
 .activity-button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+  border-color: black;
 }
 </style>

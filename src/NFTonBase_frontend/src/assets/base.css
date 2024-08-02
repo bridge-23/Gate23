@@ -155,7 +155,7 @@ button,
 .q-btn {
   background-color: #EBEBEB;
   border: 2px solid transparent;
-  color: white;
+  color: #030303;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
@@ -170,20 +170,21 @@ button,
 button:hover,
 
 .q-btn:hover {
-  background-color: #7c7a7a;
   border-color: black;
 }
 
 button:active,
 .q-btn:active {
   transform: scale(0.98);
+  font-weight: bold;
 }
 /* Style for the next button */
 .btn-next {
   /*background-image: linear-gradient(to top, #434343 0%, #070707 100%);*/
-  border: none;
-  color: white;
+  border: 2px solid transparent;
+  color: #020202;
   font-size: 1rem;
+  font-weight: bold;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
@@ -200,11 +201,13 @@ button:active,
 
 .btn-next:active {
   transform: scale(0.98);
+  border-color: black;
 }
 
 .activity-button.selected {
-  background-color: #3b60e8;
-  color: white;
+  color: #070707;
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(59, 96, 232, 0.7);
+  font-weight: bold;
+  border-color: black;
 }
