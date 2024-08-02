@@ -151,35 +151,36 @@ h6 {
 }
 
 button,
+
 .q-btn {
-  background-color: #1c92d2;
-  background-image: linear-gradient(to top, #6224e7 0%, #3b60e8 100%);
-  border: none;
+  background-color: #EBEBEB;
+  border: 2px solid transparent;
   color: white;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: border-color 0.3s ease, background-image 0.3s ease;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
 button:hover,
+
 .q-btn:hover {
-  background-image: linear-gradient(to top, #3b60e8 0%, #6224e7 100%);
+  background-color: #7c7a7a;
+  border-color: black;
 }
 
 button:active,
 .q-btn:active {
   transform: scale(0.98);
 }
-
 /* Style for the next button */
 .btn-next {
-  background-image: linear-gradient(to top, #434343 0%, #070707 100%);
+  /*background-image: linear-gradient(to top, #434343 0%, #070707 100%);*/
   border: none;
   color: white;
   font-size: 1rem;
@@ -194,7 +195,7 @@ button:active,
 }
 
 .btn-next:hover {
-  background-image: linear-gradient(to top, #070707 0%, #434343 100%);
+  border-color: black;
 }
 
 .btn-next:active {

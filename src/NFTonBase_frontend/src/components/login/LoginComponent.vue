@@ -1,10 +1,9 @@
 <template>
   <div class="login-container">
     <div class="login-form">
-      <h2 class="text-white">Login</h2>
-      <h3 class="text-white my-4">Gate23</h3>
+      <h2 class="text-black font-bold my-4">Gate23</h2>
       <q-btn class="login-button" @click="onLogin" :loading="isLoading">
-        <i class="fas fa-fingerprint"></i> Log In with Internet Identity
+        <i class="fas fa-fingerprint"></i> Log in
       </q-btn>
     </div>
   </div>
@@ -16,13 +15,9 @@ import { NFIDProvider, signIn } from '@junobuild/core'
 import logoUrl from '@/assets/icon-512x512.png'
 import { useAuthStore } from '@/stores/auth'
 import {useRouter} from "vue-router";
-
 const isLoading = ref(false)
-
 const authStore = useAuthStore()
-
 const router = useRouter()
-
 const onLogin = async () => {
   isLoading.value = true
 
@@ -50,14 +45,13 @@ const onLogin = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to top, #2e2e2e 0%, #070707 100%);
+  background-color: #ffffff;
 }
 
 .login-form {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
   padding: 3rem;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   text-align: center;
   color: black;
@@ -66,14 +60,13 @@ const onLogin = async () => {
 .login-form h1 {
   margin-bottom: 2rem;
   font-size: 3rem;
-  color: #fff;
+  color: #0c0c0c;
 }
 
 .login-button {
-  background-color: #1c92d2;
-  background: linear-gradient(to top, #2e2e2e 0%, #070707 100%);
+  background-color: #ffffff;
   border: none;
-  color: white;
+  color: #0c0c0c;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
@@ -89,10 +82,11 @@ const onLogin = async () => {
 }
 
 .login-button:hover {
-  background-image: linear-gradient(to top, #070707 0%, #2e2e2e 100%);
+  background-color: #1e1d1d;
 }
 
 .login-button:active {
   transform: scale(0.98);
 }
+
 </style>

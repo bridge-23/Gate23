@@ -67,10 +67,8 @@ interface Receipt {
 
 const authStore = useAuthStore()
 const { isLogin, ethAddress } = storeToRefs(authStore)
-
 const RPC_ENDPOINT = 'https://base.drpc.org'
 const CONTRACT_ADDRESS = '0x1CFEA7ecB518B3e4C5f72f11bc0F8E75A070A5C0'
-
 const nftList = ref<Product[]>([])
 const isLoading = ref(false)
 

@@ -1,14 +1,60 @@
 <template>
-  <q-drawer v-model="drawerOpen" show-if-above side="left" elevated :width="250" :breakpoint="840"
-    class="bg-[#EBEBEB]">
+  <q-drawer v-model="drawerOpen" show-if-above side="left" elevated :width="250" :breakpoint="840" class="bg-[#EBEBEB]">
     <div class="px-5 py-5 h-full">
       <div class="flex flex-col justify-between h-full">
+        <!-- Main Sidebar Items -->
         <div>
-          <SidebarItems v-for="item in barItems" v-bind="item" :key="item.name" />
-          <q-expansion-item label="Collections" expand-separator class="custom-expansion-item">
-            <SidebarItems v-for="collection in collections" :key="collection.collection_name" :name="collection.collection_name" :route="`/collections/${collection.id}`" class="custom-sidebar-item" />
+          <q-item
+            clickable
+            v-ripple
+            tag="a"
+            href="/"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="add_box" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Add Product</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            v-ripple
+            tag="a"
+            href="/create-collection"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="create_new_folder" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Create collection</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-expansion-item label="Collections" icon="collections" class="custom-expansion-item">
+            <q-item
+              clickable
+              v-ripple
+              v-for="collection in collections"
+              :key="collection.collection_name"
+              tag="a"
+              :href="`/collections/${collection.id}`"
+              class="sidebar-sub-item"
+            >
+              <q-item-section avatar>
+                <q-icon name="folder" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ collection.collection_name }}</q-item-label>
+              </q-item-section>
+            </q-item>
           </q-expansion-item>
         </div>
+
+        <!-- Logout Item -->
         <SidebarItems v-bind="LogoutItem" v-if="isLogin" />
       </div>
     </div>
@@ -49,41 +95,59 @@ const LogoutItem = {
 </script>
 
 <style scoped>
-
-.custom-expansion-item {
-  background-color: #EBEBEB;
-  color: #2f2e2e;
+.sidebar-item {
+  background-color: transparent;
+  color: #333;
   border-radius: 8px;
-  margin-bottom: 10px;
-  padding: 10px;
-  font-weight: bold;
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-item:hover{
+  border-radius: 0px;
+}
+
+.sidebar-sub-item:hover {
+  background-color: #c9c9c9;
+}
+
+.sidebar-sub-item {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: #4f4d4d;
+  padding-left: 40px;
 }
 
 .custom-expansion-item .q-item__label {
-  font-weight: bold;
   color: #1e1b1b;
-  border-radius: 24px;
-  background-color: #EBEBEB;
+}
+
+.custom-expansion-item {
+  background-color: transparent;
+  color: #333;
 }
 
 .custom-expansion-item .q-item__section--main {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  color: #1e1b1b;
-  background-color: #EBEBEB;
 }
 
-.custom-sidebar-item {
-  background-color: #EBEBEB;
-  color: #1e1b1b;
-  margin: 5px 0;
-  padding: 10px;
+.q-item-label {
+  font-size: 1rem;
+  text-align: left; /* Ensure label text aligns left */
 }
 
-.custom-sidebar-item:hover {
-  background-color: #EBEBEB;
+.q-item-section {
+  text-align: left; /* Default left alignment */
+}
 
-  border-radius: 24px;
+.q-icon {
+  color: #888;
+  margin-right: 8px; /* Add spacing if necessary */
+}
+
+.q-icon:hover {
+  color: #444;
 }
 </style>

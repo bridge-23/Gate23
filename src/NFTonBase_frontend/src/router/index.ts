@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-// import { useProfileStore } from '@/stores/profile'
 import { JunoProfileAPI } from '@/api/junoProfileAPI'
+// import { useProfileStore } from '@/stores/profile'
 // import { useCollectionStore } from '@/stores/collection'
 // import { JunoCollectionAPI } from '../api/junoCollectionAPI'
 

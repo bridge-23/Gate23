@@ -1,19 +1,19 @@
 <template>
   <div class="container">
-    <h1>Create First Collection</h1>
+    <h1 style="font-weight: bold;">Create First Collection</h1>
     <div class="form-group">
-      <label class="label">Title (Name)</label>
+      <label class="label" style="font-weight: bold;">Title (Name)</label>
       <input v-model="collectionTitle" placeholder="Collection Name" type="text" class="input" />
     </div>
     <div class="form-group">
-      <label class="label">Media</label>
+      <label class="label" style="font-weight: bold;">Media</label>
       <div class="button-group">
         <button class="btn" @click="uploadNew">Upload new</button>
         <button class="btn" @click="addFromLink">Add from link</button>
       </div>
     </div>
     <div class="form-group">
-      <label class="label">Collection type (ERC1155)</label>
+      <label class="label" style="font-weight: bold;">Collection Chain </label>
       <select v-model="collectionType" class="select">
         <option value="BASE">BASE</option>
         <!-- Add other options as needed -->
@@ -56,22 +56,30 @@ const finishSetup = async () => {
   collectionStore.setName(collectionTitle.value)
   collectionStore.setCollectionType(itemType.value)
   collectionStore.setImageUrl(imageUrl.value)
-
   profileStore.setOnboardingCompleted()
 
-  console.log('Collection created:', collectionStore.collection)
-  console.log('Profile:', profileStore.profile)
-  await profileStore.saveProfileToDB()
-  await collectionStore.saveCollectionToDB()
-  router.push('/')
+/*  console.log('Collection created:', collectionStore.collection)
+  console.log('Profile:', profileStore.profile)*/
+
+  try {
+    await profileStore.saveProfileToDB()
+    await collectionStore.saveCollectionToDB()
+    console.log('Collection saved successfully');
+
+    // Redirect after a successful save
+    await router.push('/')
+  } catch (error) {
+    console.error('Error saving collection or profile:', error)
+    alert('Failed to save collection or profile. Please try again.')
+  }
 }
 
 const uploadNew = () => {}
-
 const addFromLink = () => {}
 </script>
 
 <style scoped>
+
 .container {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -90,7 +98,8 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin: 20px 0; /* Optional: space around the form group */
+  text-align: left; /* Ensure text is left-aligned */
 }
 
 .label {
@@ -117,13 +126,13 @@ h1 {
 }
 
 .radio-label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1rem;
+  display: flex;
+  align-items: center; /* Aligns the radio input and text vertically */
+  margin-bottom: 10px; /* Space between radio options */
 }
 
 .radio-input {
-  margin-right: 10px;
+  margin-right: 8px; /* Space between radio button and label text */
 }
 
 .button-group {
@@ -133,10 +142,8 @@ h1 {
 
 .btn,
 .btn-next {
-  background-color: #1c92d2;
-  background-image: linear-gradient(to top, #6224e7 0%, #3b60e8 100%);
-  border: none;
-  color: white;
+  background-color: #ffffff;
+  color: #1e1d1d;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
@@ -147,16 +154,21 @@ h1 {
 }
 
 .btn:hover,
-.btn-next:hover {
-  background-image: linear-gradient(to top, #3b60e8 0%, #6224e7 100%);
-}
-
 .btn:active,
 .btn-next:active {
   transform: scale(0.98);
+  border-color: black;
 }
 
 .btn-next {
   width: 100%;
+  border: 2px solid transparent;
+  font-weight: bold
+}
+.btn-next:hover {
+  transform: scale(0.98);
+  font-size: 1rem;
+  border-color: black;
+  font-weight: bold;
 }
 </style>

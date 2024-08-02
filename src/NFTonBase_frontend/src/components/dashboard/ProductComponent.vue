@@ -52,7 +52,7 @@
       </div>
 
       <div class="col-span-12 flex justify-end">
-        <q-btn label="Add" no-caps class="btn-next" @click="saveProduct" />
+        <q-btn label="Save" no-caps class="btn-next" @click="saveProduct" />
       </div>
 
       <input
@@ -85,20 +85,19 @@ import { Actor, HttpAgent } from '@dfinity/agent'
 import { idlFactory as NFTonBase_idlFactory } from '@/utils/backend.did'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
+import router from '@/router'
 
 const canisterId = 'tkuag-tqaaa-aaaak-akvgq-cai' as string
 const agent = new HttpAgent({ host: 'https://ic0.app' })
 const actor = Actor.createActor(NFTonBase_idlFactory, { agent, canisterId })
 const authStore = useAuthStore()
 const { isLogin, ethAddress } = storeToRefs(authStore)
-
 // const comparePrice = ref('')
 // const costPerItem = ref('')
 // const profit = ref('')
 // const margin = ref('')
 // const variant = ref('Classic')
 // const active = ref('Active')
-
 const title = ref('')
 const description = ref('')
 const selectedCollection = ref<any>(null)
@@ -109,7 +108,7 @@ const imageByteArray = ref()
 const visible = ref(false)
 const mintResult = ref('')
 const uploadedDataURL = ref('')
-const prifileStore = useProfileStore()
+const proifileStore = useProfileStore()
 const collectionStore = useCollectionStore()
 const productStore = useProductStore()
 
@@ -117,11 +116,9 @@ onMounted(() => {
   if (collectionStore.collections.length === 0) {
     collectionStore.fetchCollections()
   }
-  console.log('profile', prifileStore.profile)
+  /*console.log('profile', prifileStore.profile)*/
 })
-
 const collectionOptions = computed(() => collectionStore.collections)
-
 const updatedFile = async (uploadFile: any) => {
   if (uploadFile) {
     const grayImage = await resizeAndGrayscaleImage(uploadFile)
@@ -147,12 +144,12 @@ const updatedFile = async (uploadFile: any) => {
 const uploadImage = async (docKey: string) => {
   const result = (await actor.upload_image(docKey, imageByteArray.value)) as string
   imageLink.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/image/${result}`
-  console.log('uploadedImageURL', imageLink.value)
+  /*console.log('uploadedImageURL', imageLink.value)*/
 }
 
 const uploadData = async (docKey: string, data: object) => {
   const result = (await actor.upload_data(docKey, JSON.stringify(data))) as string
-  console.log('uploadedDataURL', result)
+/*  console.log('uploadedDataURL', result)*/
   uploadedDataURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/receipt/${result}`
 }
 
@@ -161,6 +158,10 @@ const mintNFT = async () => {
   const result = (await actor.mint_nft(ethAddress.value, uploadedDataURL.value, 1)) as string
   mintResult.value = result
   visible.value = false
+  // Redirect to the collection page after successful minting
+  if (mintResult.value) {
+    await router.push({ path: `/collections/${selectedCollection.value.id}` })
+  }
 }
 
 const removeFile = () => {
@@ -192,8 +193,8 @@ const saveProduct = async () => {
 
   await mintNFT() // mint NFT to canister!!!
 
-  console.log('ethAddress', ethAddress.value)
-  console.log('Product:', mintResult.value)
+/*  console.log('ethAddress', ethAddress.value)
+  console.log('Product:', mintResult.value)*/
   await productStore.saveProductToDB() // save product to canister!!!
 
   visible.value = false
@@ -248,8 +249,6 @@ h6 {
 
 button,
 .q-btn {
-  background-color: #959697;
-  background-image: linear-gradient(to top, #959697 0%, #959697 100%);
   border: none;
   color: #0c0c0c;
   font-size: 1rem;
@@ -266,7 +265,8 @@ button,
 
 button:hover,
 .q-btn:hover {
-  background-image: linear-gradient(to top, #959697 0%, #535354 100%);
+  outline: 2px solid black;
+  background-color: #ffffff;
 }
 
 button:active,
@@ -297,5 +297,8 @@ button:active,
 
 .btn-next:active {
   transform: scale(0.98);
+  background-color: #ffffff;
+  outline: 2px solid black;
 }
 </style>
+// This is add product component
