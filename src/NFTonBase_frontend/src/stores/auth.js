@@ -21,6 +21,14 @@ export const useAuthStore = defineStore({
     },
     setActivity(value) {
       this.activity = value
+    },
+    logout() {
+      // Reset state to initial values
+      this.isLogin = false
+      this.principal = ''
+      this.ethAddress = ''
+      this.activity = ''
+      // Optional: perform additional cleanup tasks here
     }
   },
   persist: {

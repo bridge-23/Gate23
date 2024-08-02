@@ -30,7 +30,7 @@
               <q-icon name="create_new_folder" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>Create collection</q-item-label>
+              <q-item-label>Create Collection</q-item-label>
             </q-item-section>
           </q-item>
 
@@ -52,47 +52,81 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
+
+          <!-- Logout Item -->
+          <q-item
+            clickable
+            v-ripple
+            @click="handleLogout"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="exit_to_app" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Logout</q-item-label>
+            </q-item-section>
+          </q-item>
         </div>
 
-        <!-- Logout Item -->
-        <SidebarItems v-bind="LogoutItem" v-if="isLogin" />
+        <!-- Icon Image -->
+        <img src="/ICP-badge.png" alt="Icon" class="full-size-image">
       </div>
     </div>
   </q-drawer>
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useLayoutStore } from '@/stores/layout'
 import { useAuthStore } from '@/stores/auth'
 import { useCollectionStore } from '@/stores/collection'
 import { storeToRefs } from 'pinia'
-import SidebarItems from './SidebarItems.vue'
 
+// Initialize the router
+const router = useRouter()
+
+// Initialize Pinia stores
 const layoutStore = useLayoutStore()
 const authStore = useAuthStore()
 const collectionStore = useCollectionStore()
 
+// Extract reactive state from the stores
 const { isLogin } = storeToRefs(authStore)
 const { drawerOpen } = storeToRefs(layoutStore)
 const { collections } = storeToRefs(collectionStore)
 
+// Fetch collections on component setup
 collectionStore.fetchCollections()
 
-const barItems = [
-  {
-    name: 'Add product',
-    route: '/'
-  },
-  {
-    name: 'All products',
-    route: '/all-nfts'
-  }
-]
-const LogoutItem = {
-  name: 'Logout',
-  route: '/auth/login'
+// Define the logout handler
+const handleLogout = () => {
+  authStore.logout() // Call the logout method from authStore
+  router.push('/auth/login') // Redirect to login page
 }
 </script>
+
+<style scoped>
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  background-color: #dcdcdc; /* Optional: Add hover effect */
+}
+
+.full-size-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: inline-block;
+  margin-top: 20px; /* Add margin to separate from items */
+}
+</style>
 
 <style scoped>
 .sidebar-item {
