@@ -43,20 +43,23 @@
           class="w-full aspect-square my-3 border-[#1976D2] border-[2px] rounded-md"
         />
       </div>
+
       <div class="col-span-6">
         <label>Price</label>
         <div class="grid grid-cols-2 gap-4">
           <q-input v-model="price" label="Price" outlined dense />
         </div>
       </div>
+
       <div class="col-span-12 flex justify-end">
-        <q-btn label="Save" no-caps class="btn-next" @click="saveProduct" />
+        <q-btn label="Add" no-caps class="btn-next" @click="saveProduct" />
       </div>
+
       <input
         v-model="mintResult"
         placeholder="Mint result"
         readonly
-        class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-white mt-3"
+        class="w-full p-2 bg-transparent border border-gray-500 rounded-md text-green mt-3 font-bold"
       />
     </div>
     <q-inner-loading
@@ -66,6 +69,7 @@
       label-style="font-size: 1.1em"
     />
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -199,7 +203,7 @@ const saveProduct = async () => {
 <style scoped>
 /* General styles for the container */
 .container {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(100, 99, 99, 0.1);
   border-radius: 10px;
   padding: 20px;
   width: 100%;
@@ -247,8 +251,9 @@ button,
   background-color: #959697;
   background-image: linear-gradient(to top, #959697 0%, #959697 100%);
   border: none;
-  color: white;
+  color: #0c0c0c;
   font-size: 1rem;
+  font-weight: bold;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
@@ -261,7 +266,7 @@ button,
 
 button:hover,
 .q-btn:hover {
-  background-image: linear-gradient(to top, #959697 0%, #959697 100%);
+  background-image: linear-gradient(to top, #959697 0%, #535354 100%);
 }
 
 button:active,
