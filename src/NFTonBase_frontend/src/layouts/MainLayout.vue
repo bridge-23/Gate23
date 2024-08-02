@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { computed } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import HeaderComponent from '@/components/header/HeaderComponent.vue';
@@ -20,4 +21,5 @@ import SidebarComponent from '@/components/sideBar/SidebarComponent.vue';
 
 const authStore = useAuthStore();
 const isLogin = computed(() => authStore.isLogin);
+
 </script>

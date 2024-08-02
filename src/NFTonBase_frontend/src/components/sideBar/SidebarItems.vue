@@ -1,7 +1,7 @@
 <template>
   <button
     @click="onClick"
-    class="px-5 py-2 my-2 text-lg text-[#f4faff] font-semibold rounded-lg cursor-pointer"
+    class="px-5 py-2 my-2 text-lg text-[#1e1b1b] font-semibold rounded-lg cursor-pointer"
   >
     {{ name }}
   </button>

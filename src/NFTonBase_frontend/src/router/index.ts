@@ -59,30 +59,30 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach(async (to, from, next) => {
-//   const authStore = useAuthStore()
-//   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore()
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
 
-//   if (requiresAuth && !authStore.isLogin) {
-//     next('/auth/login')
-//   } else if (to.path === '/' && !authStore.isLogin) {
-//     next('/auth/login')
-//   } else if (requiresAuth && authStore.isLogin) {
-//     const record = await fetchUserRecord()
-//     if (
-//       !record.onboarding_completed &&
-//       !['/select-activity', '/create-shop', '/create-collection'].includes(to.path)
-//     ) {
-//       next('/select-activity')
-//     } else if (record.onboarding_completed && to.path === '/select-activity') {
-//       next('/')
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
+  if (requiresAuth && !authStore.isLogin) {
+    next('/auth/login')
+  } else if (to.path === '/' && !authStore.isLogin) {
+    next('/auth/login')
+  } else if (requiresAuth && authStore.isLogin) {
+    const record = await fetchUserRecord()
+    if (
+      !record.onboarding_completed &&
+      !['/select-activity', '/create-shop', '/create-collection'].includes(to.path)
+    ) {
+      next('/select-activity')
+    } else if (record.onboarding_completed && to.path === '/select-activity') {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 const fetchUserRecord = async () => {
   const junoProfileAPI = new JunoProfileAPI()

@@ -14,9 +14,14 @@
 import { ref } from 'vue'
 import { NFIDProvider, signIn } from '@junobuild/core'
 import logoUrl from '@/assets/icon-512x512.png'
-import router from '@/router';
+import { useAuthStore } from '@/stores/auth'
+import {useRouter} from "vue-router";
 
 const isLoading = ref(false)
+
+const authStore = useAuthStore()
+
+const router = useRouter()
 
 const onLogin = async () => {
   isLoading.value = true
@@ -29,7 +34,7 @@ const onLogin = async () => {
         logoUrl
       })
     })
-
+    authStore.setIsLogin(true)
     router.push('/')
   } catch (error) {
     console.error('Failed to sign in:', error)

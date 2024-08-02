@@ -1,11 +1,11 @@
 <template>
   <q-drawer v-model="drawerOpen" show-if-above side="left" elevated :width="250" :breakpoint="840"
-    class="bg-gradient-to-br from-[#141e30] to-[#243b55] -z-10">
+    class="bg-[#EBEBEB]">
     <div class="px-5 py-5 h-full">
       <div class="flex flex-col justify-between h-full">
         <div>
           <SidebarItems v-for="item in barItems" v-bind="item" :key="item.name" />
-          <q-expansion-item icon="collections" label="Collections" expand-separator class="custom-expansion-item">
+          <q-expansion-item label="Collections" expand-separator class="custom-expansion-item">
             <SidebarItems v-for="collection in collections" :key="collection.collection_name" :name="collection.collection_name" :route="`/collections/${collection.id}`" class="custom-sidebar-item" />
           </q-expansion-item>
         </div>
@@ -34,11 +34,11 @@ collectionStore.fetchCollections()
 
 const barItems = [
   {
-    name: 'Mint NFT',
+    name: 'Add product',
     route: '/'
   },
   {
-    name: 'All NFTs',
+    name: 'All products',
     route: '/all-nfts'
   }
 ]
@@ -49,34 +49,41 @@ const LogoutItem = {
 </script>
 
 <style scoped>
+
 .custom-expansion-item {
-  background-color: #243b55;
-  color: #ffffff;
+  background-color: #EBEBEB;
+  color: #2f2e2e;
   border-radius: 8px;
   margin-bottom: 10px;
   padding: 10px;
+  font-weight: bold;
 }
 
 .custom-expansion-item .q-item__label {
   font-weight: bold;
-  color: #ffffff;
+  color: #1e1b1b;
+  border-radius: 24px;
+  background-color: #EBEBEB;
 }
 
 .custom-expansion-item .q-item__section--main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #1e1b1b;
+  background-color: #EBEBEB;
 }
 
 .custom-sidebar-item {
-  background-color: #1e2a38;
-  color: #ffffff;
-  border-radius: 8px;
+  background-color: #EBEBEB;
+  color: #1e1b1b;
   margin: 5px 0;
   padding: 10px;
 }
 
 .custom-sidebar-item:hover {
-  background-color: #17212b;
+  background-color: #EBEBEB;
+
+  border-radius: 24px;
 }
 </style>

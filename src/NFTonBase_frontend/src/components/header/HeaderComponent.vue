@@ -4,7 +4,11 @@
       <q-btn flat dense round icon="menu" @click="toggleLeftDrawer" />
       <!-- <q-Img :src=""></q-Img> -->
       <q-toolbar-title>
-        <p class="m-0 text-2xl font-semibold">{{ title }}</p>
+        <div class="flex items-center">
+          <img src="/icon-512x512.png" alt="Icon" class="w-8 h-8 mr-2">
+          <p class="m-0 text-2xl font-semibold">Gate 23</p>
+          <!-- <p class="m-0 text-2xl font-semibold">{{ title }}</p> -->
+        </div>
       </q-toolbar-title>
       <div>
         <p v-if="isLogin" class="mb-0 text-md font-semibold">{{ principal }}</p>
@@ -32,7 +36,6 @@ const router = useRouter()
 const authStore = useAuthStore()
 const layoutStore = useLayoutStore()
 const profileStore = useProfileStore()
-
 // const { setIsLogin, setPrincipal, setAddress } = authStore
 const { setDrawerOpen } = layoutStore
 const { isLogin, principal, ethAddress } = storeToRefs(authStore)
@@ -42,17 +45,17 @@ const title = ref('Mint NFT')
 watch(
   () => route.path,
   () => {
-    if (route.path == '/mint-nft') title.value = 'Mint NFT'
-    if (route.path == '/mint-nfts') title.value = 'Mint NFTs'
-    if (route.path == '/all-nfts') title.value = 'All NFTs'
+    if (route.path == '/mint-nft') title.value = 'Add product'
+    if (route.path == '/mint-nfts') title.value = 'Add product'
+    if (route.path == '/all-nfts') title.value = 'All products'
     if (route.path == '/wallet') title.value = 'Wallet'
   }
 )
 
 onBeforeMount(() => {
-  if (route.path == '/') title.value = 'Mint NFT'
-  if (route.path == '/mint-nfts') title.value = 'Mint NFTs'
-  if (route.path == '/all-nfts') title.value = 'All NFTs'
+  if (route.path == '/') title.value = 'Add product'
+  if (route.path == '/mint-nfts') title.value = 'Add product'
+  if (route.path == '/all-nfts') title.value = 'All products'
   if (route.path == '/wallet') title.value = 'Wallet'
 })
 

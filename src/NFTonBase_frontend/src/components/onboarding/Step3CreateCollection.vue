@@ -63,7 +63,7 @@ const finishSetup = async () => {
   console.log('Profile:', profileStore.profile)
   await profileStore.saveProfileToDB()
   await collectionStore.saveCollectionToDB()
-  // router.push('/')
+  router.push('/')
 }
 
 const uploadNew = () => {}

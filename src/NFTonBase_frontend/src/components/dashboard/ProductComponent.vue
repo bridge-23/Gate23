@@ -204,7 +204,7 @@ const saveProduct = async () => {
   padding: 20px;
   width: 100%;
   max-width: 1000px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgb(149, 150, 151);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -244,8 +244,8 @@ h6 {
 
 button,
 .q-btn {
-  background-color: #1c92d2;
-  background-image: linear-gradient(to top, #6224e7 0%, #3b60e8 100%);
+  background-color: #959697;
+  background-image: linear-gradient(to top, #959697 0%, #959697 100%);
   border: none;
   color: white;
   font-size: 1rem;
@@ -261,7 +261,7 @@ button,
 
 button:hover,
 .q-btn:hover {
-  background-image: linear-gradient(to top, #3b60e8 0%, #6224e7 100%);
+  background-image: linear-gradient(to top, #959697 0%, #959697 100%);
 }
 
 button:active,
