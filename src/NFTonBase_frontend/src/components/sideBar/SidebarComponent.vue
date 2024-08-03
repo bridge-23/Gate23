@@ -52,6 +52,21 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
+
+          <!-- Logout Item -->
+          <q-item
+            clickable
+            v-ripple
+            @click="handleLogout"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="exit_to_app" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Logout</q-item-label>
+            </q-item-section>
+          </q-item>
         </div>
 
         <!-- Icon Image -->

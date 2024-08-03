@@ -79,8 +79,6 @@ authSubscribe(async (user: User | null) => {
     } catch (error) {
       console.error('Error fetching EVM address:', error)
     }
-
-    router.push('/')
   }
 })
 </script>
