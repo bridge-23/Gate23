@@ -34,6 +34,21 @@
             </q-item-section>
           </q-item>
 
+<!--          <q-item
+            clickable
+            v-ripple
+            tag="a"
+            href="/all-nfts"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="create_new_folder" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>OnChain</q-item-label>
+            </q-item-section>
+          </q-item>-->
+
           <q-expansion-item label="Collections" icon="collections" class="custom-expansion-item">
             <q-item
               clickable

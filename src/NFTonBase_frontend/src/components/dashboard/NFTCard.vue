@@ -10,6 +10,7 @@
       <span class="text-gray-500">No Image Available</span>
     </div>
     <q-card-actions class="flex flex-col items-center mx-10">
+
       <q-btn color="primary" @click="onViewDetails" class="w-full">Details</q-btn>
     </q-card-actions>
   </q-card>

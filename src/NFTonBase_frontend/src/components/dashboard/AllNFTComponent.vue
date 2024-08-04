@@ -3,24 +3,25 @@
   <q-page v-if="isLogin">
     <div class="px-10 py-10">
       <div v-if="isLoading">
-        <p class="text-center text-primary text-xl text-bold">Loading...</p>
+        <p class="text-center text-primary text-xl font-bold">Loading...</p>
       </div>
-      <div class="grid grid-cols-12 gap-3" v-else>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" v-else>
         <template v-if="nftList.length > 0">
-          <div class="xl:col-span-3 lg:col-span-4 col-span-6" v-for="nft in nftList">
+          <div class="col-span-1" v-for="nft in nftList" :key="nft.receipt_number">
             <NftCard v-bind="{ receipt: nft }" />
           </div>
         </template>
-        <div v-else class="col-span-12">
-          <p class="text-white text-center text-primary text-xl text-bold">No NFTs...</p>
+        <div v-else class="col-span-full">
+          <p class="text-center text-primary text-xl font-bold">No NFTs available...</p>
         </div>
       </div>
     </div>
   </q-page>
-  <q-page v-else class="flex justify-center items-center">
-    <p class="text-[#1976D2] text-2xl font-semibold">Login first...</p>
+  <q-page v-else class="flex justify-center items-center h-full">
+    <p class="text-[#1976D2] text-2xl font-semibold">Please log in first...</p>
   </q-page>
 </template>
+
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue'
 import { useAuthStore } from '@/stores/auth'
@@ -30,6 +31,7 @@ import { ethers } from 'ethers'
 import TokenABI from '@/utils/NFTABI.json'
 import type { Product } from '@/types/entities'
 
+// Interfaces
 interface Modifier {
   modifier_name: string
   modifier_price: number
@@ -86,9 +88,10 @@ onBeforeMount(async () => {
       const json: Product = await nftData.json()
       nftList.value.push(json)
     })
-    isLoading.value = false
   } catch (error) {
     console.error('Error calling contract method:', error)
+  } finally {
+    isLoading.value = false
   }
 })
 </script>
