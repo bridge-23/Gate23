@@ -56,7 +56,7 @@
               v-for="collection in collections"
               :key="collection.collection_name"
               tag="a"
-              :href="`/collections/${collection.id}`"
+              :href="`/collections_gate23/${collection.id}`"
               class="sidebar-sub-item"
             >
               <q-item-section avatar>

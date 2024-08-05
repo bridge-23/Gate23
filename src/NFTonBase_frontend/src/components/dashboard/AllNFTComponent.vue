@@ -7,9 +7,9 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" v-else>
         <template v-if="nftList.length > 0">
-          <div class="col-span-1" v-for="nft in nftList" :key="nft.receipt_number">
+<!--          <div class="col-span-1" v-for="nft in nftList" :key="nft.receipt_number">
             <NftCard v-bind="{ receipt: nft }" />
-          </div>
+          </div>-->
         </template>
         <div v-else class="col-span-full">
           <p class="text-center text-primary text-xl font-bold">No NFTs available...</p>
