@@ -23,7 +23,7 @@
             clickable
             v-ripple
             tag="a"
-            href="/create-collection"
+            @click="handleCreateCollection"
             class="sidebar-item"
           >
             <q-item-section avatar>
@@ -55,8 +55,7 @@
               v-ripple
               v-for="collection in collections"
               :key="collection.collection_name"
-              tag="a"
-              :href="`/collections_gate23/${collection.id}`"
+              @click="handleRout2Collection(collection.id)"
               class="sidebar-sub-item"
             >
               <q-item-section avatar>
@@ -114,10 +113,22 @@ const { collections } = storeToRefs(collectionStore)
 // Fetch collections on component setup
 collectionStore.fetchCollections()
 
-// Define the logout handler
+// Define navigation handlers
+const handleNavigation = (path: string) => {
+  router.push(path)
+}
+
+const handleCreateCollection = () => {
+  handleNavigation('/create-collection')
+}
+
+const handleRout2Collection = (collectionId: string) => {
+  handleNavigation(`/collections/${collectionId}`)
+}
+
 const handleLogout = () => {
   authStore.logout() // Call the logout method from authStore
-  router.push('/auth/login') // Redirect to login page
+  handleNavigation('/auth/login') // Redirect to login page
 }
 </script>
 

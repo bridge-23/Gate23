@@ -46,10 +46,11 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: '/collections_gate23/:collectionId',
+        path: '/collections/:collectionId',
         component: () => import('@/components/dashboard/ProductPage.vue'),
         meta: { requiresAuth: true }
       }
+
     ]
   }
 ]

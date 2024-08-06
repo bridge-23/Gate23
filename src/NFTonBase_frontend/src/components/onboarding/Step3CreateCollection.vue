@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 style="font-weight: bold;">Create First Collection</h1>
+    <h1 style="font-weight: bold;">Create Collection</h1>
     <div class="form-group">
       <label class="label" style="font-weight: bold;">Title (Name)</label>
       <input v-model="collectionTitle" placeholder="Collection Name" type="text" class="input" />

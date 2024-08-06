@@ -70,7 +70,7 @@ const onLogin = async () => {
 }
 
 .navbar {
-  position: fixed; /* Ensures the navbar stays on top */
+  position: fixed;
   width: 100%;
   display: flex;
   align-items: center;
@@ -81,10 +81,10 @@ const onLogin = async () => {
   height: 60px;
   z-index: 1000;
 }
+
 .navbar2 {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .logo {
@@ -106,11 +106,6 @@ const onLogin = async () => {
   justify-content: center;
   font-weight: bold;
   transition: all 0.3s ease;
-
-}
-
-.login-button i {
-  margin-right: 0.5rem;
 }
 
 .login-button:hover {
@@ -127,6 +122,7 @@ const onLogin = async () => {
   justify-content: center;
   color: white;
   text-align: center;
+  padding: 20px;
 }
 
 .cover-text {
@@ -139,7 +135,6 @@ const onLogin = async () => {
   font-size: 3rem;
   margin: 0;
   font-weight: bold;
-  padding-right: 340px;
 }
 
 .cover-subtitle {
@@ -159,5 +154,34 @@ const onLogin = async () => {
 .full-size-image {
   max-width: 150px;
   opacity: 0.8;
+}
+
+/* Media query for small screens (mobile devices) */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: row;
+    padding: 10px;
+    height: auto;
+  }
+
+  .site-title {
+    font-size: 1.5rem;
+  }
+
+  .cover-title {
+    font-size: 2rem;
+  }
+
+  .cover-subtitle {
+    font-size: 1rem;
+  }
+
+  .cover-text {
+    padding: 1rem;
+  }
+
+  .login-button {
+    margin-top: 10px; /* Adds margin for spacing on smaller screens */
+  }
 }
 </style>
