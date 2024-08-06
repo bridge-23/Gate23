@@ -29,7 +29,9 @@
         Gift Card (ERC721)
       </label>
     </div>
-    <button class="btn-next" @click="finishSetup">Finish</button>
+    <button class="btn-next" @click="finishSetup" :disabled="isLoading">
+      {{ isLoading ? 'Saving...' : 'Finish' }}
+    </button>
   </div>
 </template>
 
@@ -48,11 +50,15 @@ const router = useRouter()
 const profileStore = useProfileStore()
 const collectionStore = useCollectionStore()
 
+const isLoading = ref(false)
+
 const finishSetup = async () => {
   if (!collectionTitle.value) {
     alert('Please fill in all fields.')
     return
   }
+  isLoading.value = true
+
   collectionStore.setName(collectionTitle.value)
   collectionStore.setCollectionType(itemType.value)
   collectionStore.setImageUrl(imageUrl.value)
@@ -65,12 +71,13 @@ const finishSetup = async () => {
     await profileStore.saveProfileToDB()
     await collectionStore.saveCollectionToDB()
     console.log('Collection saved successfully');
-
     // Redirect after a successful save
     await router.push('/')
   } catch (error) {
     console.error('Error saving collection or profile:', error)
     alert('Failed to save collection or profile. Please try again.')
+  } finally {
+    isLoading.value = false // Reset loading state after save attempt
   }
 }
 

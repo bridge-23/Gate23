@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { NFIDProvider, signIn } from '@junobuild/core'
-import logoUrl from '@/assets/icon-512x512.png'
+import { onMounted, ref } from 'vue'
+import { InternetIdentityProvider, signIn } from '@junobuild/core'
+//import logoUrl from '@/assets/icon-512x512.png'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from "vue-router";
 
@@ -40,21 +40,26 @@ const isLoading = ref(false)
 const authStore = useAuthStore()
 const router = useRouter()
 
+// Redirect if already logged in
+onMounted(() => {
+  if (authStore.isLogin) {
+    router.push('/')
+  }
+})
 const onLogin = async () => {
   isLoading.value = true
 
   try {
     await signIn({
       maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000), // 30 days
-      provider: new NFIDProvider({
-        appName: 'Gate23',
-        logoUrl
+      provider:  new InternetIdentityProvider({
+        domain: "ic0.app"
       })
     })
     authStore.setIsLogin(true)
     await router.push('/')
   } catch (error) {
-    console.error('Failed to sign in:', error)
+    /*console.error('Failed to sign in:', error)*/
   } finally {
     isLoading.value = false
   }

@@ -40,7 +40,7 @@
           :src="imageLink"
           fit="contain"
           spinner-color="white"
-          class="w-full aspect-square my-3 border-[#1976D2] border-[2px] rounded-md"
+          class="w-56 h-48 aspect-square my-3 border-[#1976D2] border-[2px] rounded-md"
         />
       </div>
 
@@ -52,7 +52,10 @@
       </div>
 
       <div class="col-span-12 flex justify-end">
-        <q-btn label="Save" no-caps class="btn-next" @click="saveProduct" />
+        <q-btn
+          label="Save"
+          no-caps class="btn-next"
+          @click="saveProduct" />
       </div>
 
       <input
@@ -160,7 +163,7 @@ const mintNFT = async () => {
   visible.value = false
   // Redirect to the collection page after successful minting
   if (mintResult.value) {
-    await router.push({ path: `/collections/${selectedCollection.value.id}` })
+    router.push({ path: `/collections/${selectedCollection.value.id}` })
   }
 }
 
