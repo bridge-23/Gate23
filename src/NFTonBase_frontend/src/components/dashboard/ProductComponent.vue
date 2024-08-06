@@ -53,9 +53,12 @@
 
       <div class="col-span-12 flex justify-end">
         <q-btn
-          label="Save"
-          no-caps class="btn-next"
-          @click="saveProduct" />
+          :label="isLoading ? 'Processing...' : 'Save'"
+          no-caps
+          class="btn-next"
+          @click="saveProduct"
+          :disabled="isLoading"
+        />
       </div>
 
       <input
@@ -114,6 +117,7 @@ const uploadedDataURL = ref('')
 const proifileStore = useProfileStore()
 const collectionStore = useCollectionStore()
 const productStore = useProductStore()
+const isLoading = ref(false)
 
 onMounted(() => {
   if (collectionStore.collections.length === 0) {
@@ -173,34 +177,40 @@ const removeFile = () => {
 }
 
 const saveProduct = async () => {
+  if (isLoading.value) return // Prevent further clicks
+
+  isLoading.value = true
   visible.value = true
-  
-  const docKey = nanoid()
-  const rawCollection = toRaw(selectedCollection.value)
 
-  await uploadImage(docKey) // upload image to canister!!!
+  try {
+    const docKey = nanoid()
+    const rawCollection = toRaw(selectedCollection.value)
 
-  productStore.setId(docKey)
-  productStore.setCollectioId(rawCollection?.id)
-  productStore.setImgUrl(imageLink.value)
-  productStore.setNftData(mintResult.value)
-  productStore.setName(title.value)
-  productStore.setPrice(price.value)
-  productStore.setCurrency('USD')
-  productStore.setDescription(description.value)
+    await uploadImage(docKey) // upload image to canister!!!
 
-  await uploadData(docKey, productStore.product);
+    productStore.setId(docKey)
+    productStore.setCollectioId(rawCollection?.id)
+    productStore.setImgUrl(imageLink.value)
+    productStore.setNftData(mintResult.value)
+    productStore.setName(title.value)
+    productStore.setPrice(price.value)
+    productStore.setCurrency('USD')
+    productStore.setDescription(description.value)
 
-  // const productJson = JSON.parse(JSON.stringify(productStore.product))
-  // nftData.value = productJson as string
+    await uploadData(docKey, productStore.product)
 
-  await mintNFT() // mint NFT to canister!!!
+    await mintNFT() // mint NFT to canister!!!
 
-/*  console.log('ethAddress', ethAddress.value)
-  console.log('Product:', mintResult.value)*/
-  await productStore.saveProductToDB() // save product to canister!!!
+    await productStore.saveProductToDB() // save product to canister!!!
 
-  visible.value = false
+    console.log('Product saved successfully')
+  } catch (error) {
+    console.error('Error saving product:', error)
+    alert('Failed to save product. Please try again.')
+  } finally {
+    isLoading.value = false
+    visible.value = false
+  }
 }
 </script>
 
