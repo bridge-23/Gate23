@@ -64,13 +64,10 @@ const finishSetup = async () => {
   collectionStore.setImageUrl(imageUrl.value)
   profileStore.setOnboardingCompleted()
 
-/*  console.log('Collection created:', collectionStore.collection)
-  console.log('Profile:', profileStore.profile)*/
 
   try {
     await profileStore.saveProfileToDB()
     await collectionStore.saveCollectionToDB()
-    console.log('Collection saved successfully');
     // Redirect after a successful save
     await router.push('/')
   } catch (error) {
