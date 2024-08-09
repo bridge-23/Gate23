@@ -81,7 +81,6 @@ onBeforeMount(async () => {
   const contract = new ethers.Contract(CONTRACT_ADDRESS, TokenABI, provider)
   try {
     const nftIDs: number[] = await contract.getHoldTokenIds(ethAddress.value)
-    console.log('NFT IDs:', nftIDs)
     nftIDs.map(async (nftID) => {
       const uri: string = await contract.uri(nftID)
       const nftData = await fetch(uri)

@@ -123,7 +123,6 @@ onMounted(() => {
   if (collectionStore.collections.length === 0) {
     collectionStore.fetchCollections()
   }
-  /*console.log('profile', prifileStore.profile)*/
 })
 const collectionOptions = computed(() => collectionStore.collections)
 const updatedFile = async (uploadFile: any) => {
@@ -151,12 +150,10 @@ const updatedFile = async (uploadFile: any) => {
 const uploadImage = async (docKey: string) => {
   const result = (await actor.upload_image(docKey, imageByteArray.value)) as string
   imageLink.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/image/${result}`
-  /*console.log('uploadedImageURL', imageLink.value)*/
 }
 
 const uploadData = async (docKey: string, data: object) => {
   const result = (await actor.upload_data(docKey, JSON.stringify(data))) as string
-/*  console.log('uploadedDataURL', result)*/
   uploadedDataURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/receipt/${result}`
 }
 
@@ -203,7 +200,6 @@ const saveProduct = async () => {
 
     await productStore.saveProductToDB() // save product to canister!!!
 
-    console.log('Product saved successfully')
   } catch (error) {
     console.error('Error saving product:', error)
     alert('Failed to save product. Please try again.')

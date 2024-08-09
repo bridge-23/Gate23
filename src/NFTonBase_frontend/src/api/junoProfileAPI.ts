@@ -38,9 +38,7 @@ export class JunoProfileAPI {
         key: authKey,
         satellite: getSatteliteOptions(),
       });
-console.log("existingDoc", existingDoc)
       const version = existingDoc ? existingDoc.version : undefined;
-console.log("version", version)
       await setDoc<Partial<Profile>>({
         collection: PROFILES_COLLECTION,
         doc: {

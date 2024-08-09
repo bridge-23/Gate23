@@ -44,7 +44,6 @@ export const useProfileStore = defineStore('profile', {
         const profileCopy = JSON.parse(JSON.stringify(this.profile))
 
         const userProfile = await junoProfileAPI.createOrUpdateProfile(profileCopy.id, profileCopy)
-        console.log('User profile:', userProfile)
       } catch (error) {
         console.error('Failed to save profile:', error)
       }

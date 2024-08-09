@@ -93,10 +93,8 @@ const fetchUserRecord = async () => {
 
   try {
     const userProfile = await junoProfileAPI.fetchProfile(authStore.principal)
-    console.log('userProfile', userProfile)
     // const collections = await junoCollectionAPI.fetchAll()
     // collectionStore.setAllCollectionData(collections)
-    // console.log('collectionStore', collectionStore.collections)
 
     return {
       onboarding_completed: userProfile?.onboarding_completed

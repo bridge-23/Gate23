@@ -1,7 +1,7 @@
 <template>
   <div class="products-page">
     <h4>{{ collectionName }}</h4>
-    <div v-if="filteredProducts.length" class="table-container">
+    <div v-if="products.length" class="table-container">
       <table class="products-table">
         <thead>
         <tr>
@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="product in filteredProducts" :key="product.id">
+        <tr v-for="product in products" :key="product.id">
           <td>
             <q-img
               :src="product.img_url"
@@ -47,42 +47,79 @@
     <div v-else>
       <p>No products found for this collection.</p>
     </div>
+    <q-inner-loading
+      :showing="isLoading"
+      label="Loading NFTs..."
+      label-class="text-teal"
+      label-style="font-size: 1.1em"
+    />
   </div>
 </template>
   
-  <script setup lang="ts">
-  import { computed, onMounted, ref, watch } from 'vue'
-  import { useRoute } from 'vue-router'
-  import { useCollectionStore } from '@/stores/collection'
-  import { storeToRefs } from 'pinia'
-  import { useProductStore } from '@/stores/product'
-  
-  const route = useRoute()
-  const collectionStore = useCollectionStore()
-  const productStore = useProductStore()
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useCollectionStore } from '@/stores/collection'
+import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
+import { ethers } from "ethers";
+import TokenABI from "@/utils/NFTABI.json";
+
+
+interface Product {
+  description: string, 
+  id: string, 
+  img_url: string, 
+  nft_data: string, 
+  product_collection_id: string, 
+  product_currency: string, 
+  product_name: string, 
+  product_price: string 
+}
+
+const RPC_ENDPOINT = "wss://base-rpc.publicnode.com";
+const CONTRACT_ADDRESS = "0x1CFEA7ecB518B3e4C5f72f11bc0F8E75A070A5C0";
+
+const collectionStore = useCollectionStore()
+const route = useRoute()
+const authStore = useAuthStore()
+const { ethAddress } = storeToRefs(authStore)
+const products = ref<Product[]>([])
+const isLoading = ref(false)
   
   const { collections } = storeToRefs(collectionStore)
-  const { products } = storeToRefs(productStore)
   const collectionName = ref('')
   
-  const updateCollectionName = () => {
+  onMounted(async () => {
+    updateCollection()
+  })
+  watch(() => route.params.collectionId, async () => {
+    products.value = []
+    updateCollection()
+  })
+
+  const updateCollection = async () => {
     const collectionId = route.params.collectionId as string
     const collection = collections.value.find((c) => c.id === collectionId)
     collectionName.value = collection ? collection.collection_name : 'Collection'
+    if(!ethAddress.value) return
+    isLoading.value = true
+    const provider = new ethers.providers.WebSocketProvider(RPC_ENDPOINT);
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, TokenABI, provider);
+    try {
+      const nftIDs: number[] = await contract.getHoldTokenIds(ethAddress.value); 
+      nftIDs.forEach(async (nftID) => {
+        const uri: string = await contract.uri(nftID);
+        const nftData = await fetch(uri);
+        const json:Product = await nftData.json()
+        if(json.product_collection_id == collectionId)
+          products.value.push(json)
+      })
+      isLoading.value = false
+    } catch (error) {
+      console.error("Error calling contract method:", error);
+    }
   }
-  
-  const filteredProducts = computed(() => {
-    const collectionId = route.params.collectionId as string
-    return products.value.filter((product) => product.product_collection_id === collectionId)
-  })
-  
-  onMounted(async () => {
-    await collectionStore.fetchCollections()
-    await productStore.fetchProducts()
-    updateCollectionName()
-  })
-  
-  watch(route, updateCollectionName)
   </script>
 
 <style scoped>

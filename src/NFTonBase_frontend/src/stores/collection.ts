@@ -31,7 +31,6 @@ export const useCollectionStore = defineStore('collection', {
         const CollectionCopy = JSON.parse(JSON.stringify(this.collection))
 
         const collection = await junoCollectionAPI.createOrUpdateCollection(CollectionCopy, collectionKey)
-        console.log('collection:', collection)
       } catch (error) {
         console.error('Failed to save collection:', error)
       }

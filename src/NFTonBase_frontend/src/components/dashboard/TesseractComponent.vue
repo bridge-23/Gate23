@@ -143,7 +143,6 @@ const onUploadImage = async () => {
   const result = (await actor.upload_image(docKey, imageByteArray.value)) as string
   // const result = (await NFTonBase_backend.upload_image(docKey, imageByteArray.value)) as string
   uploadedImageURL.value = `https://tkuag-tqaaa-aaaak-akvgq-cai.raw.icp0.io/image/${result}`
-  console.log('uploadedImageURL', uploadedImageURL.value)
   visible.value = false
 }
 
@@ -153,14 +152,12 @@ const onUploadImage = async () => {
 //   const agent = new HttpAgent({ host: 'https://ic0.app' })
 //   const actor = Actor.createActor(idlFactory, { agent, canisterId })
 //   const detectedData = (await actor.send_image_url_to_proxy(uploadedImageURL.value)) as string
-//   console.log('detectedData', detectedData)
 //   let resultText = JSON.parse(detectedData).choices[0].message.content
 //   let index = resultText.indexOf('{')
 //   resultText = resultText.slice(index)
 //   index = resultText.lastIndexOf('}')
 //   resultText = resultText.substring(0, index + 1)
 //   detectedJsonData.value = resultText
-//   console.log('receiptData', JSON.parse(resultText))
 //   visible.value = false
 // }
 
@@ -168,7 +165,6 @@ const onUploadData = async () => {
   visible.value = true
   let receiptJson = JSON.parse(detectedJsonData.value)
   receiptJson = { ...receiptJson, image_url: uploadedImageURL.value }
-  console.log(receiptJson)
   // const result = (await NFTonBase_backend.upload_data(
   //   docKey,
   //   JSON.stringify(receiptJson)

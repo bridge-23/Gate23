@@ -1,8 +1,11 @@
 {
   "NFTonBase_backend": {
-    "ic": "tkuag-tqaaa-aaaak-akvgq-cai"
+    "ic": "y7b46-xaaaa-aaaak-akyuq-cai"
   },
-  "NFTonBase_frontend": {
-    "ic": "tdxl2-fyaaa-aaaak-akvha-cai"
+  "nft_minter_backend": {
+    "ic": "em3uz-waaaa-aaaan-qmbsq-cai"
+  },
+  "nft_minter_frontend": {
+    "ic": "efy7f-aiaaa-aaaan-qmbta-cai"
   }
 }
