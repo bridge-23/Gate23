@@ -1,4 +1,3 @@
-
 type HttpHeader = record { value : text; name : text };
 // type HttpResponse = record {
 //   status : nat;
@@ -10,21 +9,21 @@ type TransformArgs = record { context : vec nat8; response : HttpResponse };
 type ByteBuf = vec nat8;
 
 type Image = record {
-    name: text;
-    img: vec nat8;
+    name : text;
+    img : vec nat8;
 };
 
 type HttpRequest = record {
-    method: text;
-    url: text;
-    headers: vec HttpHeader;
-    body: ByteBuf;
+    method : text;
+    url : text;
+    headers : vec HttpHeader;
+    body : ByteBuf;
 };
 
 type HttpResponse = record {
-    status_code: nat16;
-    headers: vec HttpHeader;
-    body: ByteBuf;
+    status_code : nat16;
+    headers : vec HttpHeader;
+    body : ByteBuf;
     // streaming_strategy: opt StreamingStrategy;
 };
 
@@ -33,21 +32,27 @@ type Token = record {};
 type Func = service {};
 
 type StreamingStrategy = variant {
-    Callback: record {
-        callback: Func;
-        token: Token;
-    }
+    Callback : record {
+        callback : Func;
+        token : Token;
+    };
 };
 
-
 service : {
-    "upload_image": (text, blob) -> (text);
-    "upload_data": (text, text) -> (text);
-    "get_system_address": () -> (text);
-    "get_evm_address": (text) -> (text);
-    "get_base_eth_balance": (text) -> (nat64, text);
-    "send_base_eth":(text, nat64) -> (text, text);
-    "mint_nft": (text, text, int32) -> (text);
-    "http_request": (HttpRequest) -> (HttpResponse) query;
+    "upload_image" : (text, blob) -> (text);
+    "upload_data" : (text, text) -> (text);
+    "get_system_address" : () -> (text);
+    "get_evm_address" : (text) -> (text);
+    "get_base_eth_balance" : (text) -> (nat64, text);
+    "send_base_eth" : (text, nat64) -> (text, text);
+    "mint_nft" : (text, text, int32) -> (text);
+    "http_request" : (HttpRequest) -> (HttpResponse) query;
     "transform" : (TransformArgs) -> (HttpResponse) query;
-}
+    "deposit_btc" : (text) -> (text, text);
+    "get_address": (text) -> (text);
+    "get_btc_balance" : (text) -> (text, text);
+    "get_usdc_balance": (text) -> (text, text);
+    "update_btc_balance" : (text) -> (nat64, text);
+    "transfer_btc" : (text, text, int32) -> (text, text);
+    "withdraw_btc" : (text, text, int32) -> (text, text);
+};

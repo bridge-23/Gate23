@@ -3,12 +3,10 @@
     <!-- Navbar -->
     <div class="navbar">
       <div class="navbar2">
-        <img src="/icon-512x512.png" alt="Gate23 Logo" class="logo">
+        <img src="/icon-512x512.png" alt="Gate23 Logo" class="logo" />
         <h1 class="site-title">Gate23</h1>
       </div>
-      <q-btn class="login-button" @click="onLogin" :loading="isLoading">
-         Log in
-      </q-btn>
+      <q-btn class="login-button" @click="onLogin" :loading="isLoading"> Log in </q-btn>
     </div>
 
     <!-- Cover Image and Text -->
@@ -16,15 +14,15 @@
       <div class="cover-text">
         <h1 class="cover-title">Making Commerce Better for Everyone</h1>
         <p class="cover-subtitle">
-          Gate23 is supporting the next generation of entrepreneurs,
-          the world's biggest brands, and everyone in between.
+          Gate23 is supporting the next generation of entrepreneurs, the world's biggest brands, and
+          everyone in between.
         </p>
       </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
-      <img src="/ICP-badge.png" alt="Icon" class="full-size-image">
+      <img src="/ICP-badge.png" alt="Icon" class="full-size-image" />
     </div>
   </div>
 </template>
@@ -34,7 +32,7 @@ import { onMounted, ref } from 'vue'
 import { InternetIdentityProvider, signIn } from '@junobuild/core'
 //import logoUrl from '@/assets/icon-512x512.png'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
 
 const isLoading = ref(false)
 const authStore = useAuthStore()
@@ -52,9 +50,9 @@ const onLogin = async () => {
   try {
     await signIn({
       maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000), // 30 days
-      provider:  new InternetIdentityProvider({
-        domain: "ic0.app"
-      })
+       provider:  new InternetIdentityProvider({
+         domain: "ic0.app"
+       })
     })
     authStore.setIsLogin(true)
     await router.push('/')

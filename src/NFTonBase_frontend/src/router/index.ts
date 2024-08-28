@@ -49,6 +49,11 @@ const routes = [
         path: '/collections/:collectionId',
         component: () => import('@/components/dashboard/ProductPage.vue'),
         meta: { requiresAuth: true }
+      },
+      {
+        path: '/wallet',
+        component: () => import('@/components/dashboard/wallet.vue'),
+        meta: { requiresAuth: true }
       }
 
     ]

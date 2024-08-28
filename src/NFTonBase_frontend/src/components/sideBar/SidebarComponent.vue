@@ -67,6 +67,21 @@
             </q-item>
           </q-expansion-item>
 
+          <!-- Wallet Item -->
+          <q-item
+            clickable
+            v-ripple
+            @click="handleWallet"
+            class="sidebar-item"
+          >
+            <q-item-section avatar>
+              <q-icon name="account_balance_wallet" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Wallet</q-item-label>
+            </q-item-section>
+          </q-item>
+
           <!-- Logout Item -->
           <q-item
             clickable
@@ -124,6 +139,10 @@ const handleCreateCollection = () => {
 
 const handleRout2Collection = (collectionId: string) => {
   handleNavigation(`/collections/${collectionId}`)
+}
+
+const handleWallet = () => {
+  handleNavigation(`/wallet`)
 }
 
 const handleLogout = () => {

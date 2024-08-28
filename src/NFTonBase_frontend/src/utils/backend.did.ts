@@ -20,15 +20,30 @@ export const idlFactory = ({ IDL }) => {
     'response' : HttpResponse,
   });
   return IDL.Service({
+    'deposit_btc' : IDL.Func([IDL.Text], [IDL.Text, IDL.Text], []),
+    'get_address' : IDL.Func([IDL.Text], [IDL.Text], []),
     'get_base_eth_balance' : IDL.Func([IDL.Text], [IDL.Nat64, IDL.Text], []),
+    'get_btc_balance' : IDL.Func([IDL.Text], [IDL.Text, IDL.Text], []),
     'get_evm_address' : IDL.Func([IDL.Text], [IDL.Text], []),
     'get_system_address' : IDL.Func([], [IDL.Text], []),
+    'get_usdc_balance' : IDL.Func([IDL.Text], [IDL.Text, IDL.Text], []),
     'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
     'mint_nft' : IDL.Func([IDL.Text, IDL.Text, IDL.Int32], [IDL.Text], []),
     'send_base_eth' : IDL.Func([IDL.Text, IDL.Nat64], [IDL.Text, IDL.Text], []),
+    'transfer_btc' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Int32],
+        [IDL.Text, IDL.Text],
+        [],
+      ),
     'transform' : IDL.Func([TransformArgs], [HttpResponse], ['query']),
+    'update_btc_balance' : IDL.Func([IDL.Text], [IDL.Nat64, IDL.Text], []),
     'upload_data' : IDL.Func([IDL.Text, IDL.Text], [IDL.Text], []),
     'upload_image' : IDL.Func([IDL.Text, IDL.Vec(IDL.Nat8)], [IDL.Text], []),
+    'withdraw_btc' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Int32],
+        [IDL.Text, IDL.Text],
+        [],
+      ),
   });
 };
 export const init = () => { return []; };
